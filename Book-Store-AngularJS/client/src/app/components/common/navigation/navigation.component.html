@@ -1,0 +1,41 @@
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+
+  <body>
+    <div>
+    <input type="checkbox" id="active">
+    <label for="active" class="menu-btn"><i class="fas fa-bars"></i></label>
+    <div class="wrapper">
+      <ul>
+<li><a routerLink="/home">Home</a></li>
+<li><a routerLink="/book/store/default">MS Book Store</a>
+  <ng-template [ngIf]="isUserLogged()"></ng-template></li>
+<li><a routerLink="/user/profile/mine">My Profile</a>
+  <a routerLink="/user/purchaseHistory">My Purchase History</a>
+  <a *ngIf="isUserAdmin()" routerLink="/book/create">Create Book</a></li>
+  <ng-template [ngIf]="!isUserLogged()">
+    <li><a routerLink="/user/register">Register</a></li>
+    <li><a routerLink="/user/login">Login</a></li>
+</ng-template>
+<ng-template [ngIf]="isUserLogged()">
+  <li><a  routerLink="/home" (click)="logout()">
+    {{getUsername()}}
+    <span>Hello, {{username}}</span> Logout
+  </a></li>
+ <li><a routerLink="/user/cart">Cart ({{cartItems}})</a></li>
+</ng-template>
+
+</ul>
+</div>
+  </div>
+  <div class="search-container">
+    <form #formDir="ngForm" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <input type="text" name="query" placeholder="title, author, genre, ISBN..." formControlName="query" />
+      <button type="submit" [disabled]="searchForm.invalid"><i class="fa fa-search"></i></button>
+    </form>
+  </div>
+  
+  </body>
